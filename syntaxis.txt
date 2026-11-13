@@ -1,0 +1,280 @@
+название:
+amethyst(аметист)
+
+АМЕТИСТ ЭТО АССЕМБЛЕР С ЧЕЛОВЕСКИМ ЛИЦОМ
+
+девиз аметиста:
+no hidden anything
+и
+one problem - one solution
+
+справка:
+аметист довольно хорошо подходит для написания операционных систем и другого системного программного обеспечения
+а также ваш код всегда останется таким как вы его написали то есть компилятор не будет менять местами поля в структурах не инициализировать сразу же после того как вы это делает, компилятор будет делать именно то что вы написали
+СОВМЕСТИМ С С
+а также у аметиста нету стандартной библиотеки всё превращается в чистый ассемблер
+
+/*комментарий только многострочный*/
+
+импорт:
+import "name"
+
+дефайн:
+crystal name meaning /*как #define в С*/
+
+ассемблер:
+asm do
+code
+end
+
+файлы:
+file f = f_open("path")
+f_carve("path", "что")
+f_del("path")
+f_rename("прошлое имя", "новое имя")
+f_create("path")
+f_close(f)
+
+вывод:
+carve("текст", переменная, "\n") /*не переводит строку автоматически, а также это последовательность шаблонов write*/
+
+ввод:
+type name = to(type, ore()) /*то есть получаем сырые байты через ore() а потом парсим их через to()*/
+
+условный оператор:
+if condition do
+elif condition do
+else
+end
+
+переменная:
+type/*int, float, bool, char, byte*/ name = meaning
+
+массив:
+type[кол во] name = meaning, meaning2
+
+словарь:
+geode<type, type> name = {key = meaning}
+
+добавить в словарь:
+add(name, индекс/имя, meaning)
+
+удалить из словаря:
+del(name, индекс/имя)
+
+доступ:
+name[ключ/индекс]
+
+функция:
+gem name(arg) -> type do
+code
+end
+
+структура: /*только данные, то есть нельзя делать ссылки на функции*/
+layer name do
+type name
+end
+
+для доступа к полю:
+name.name /*всегда*/
+
+/*пример:
+layer animal do
+char[] name
+char[] voice
+int age
+end
+
+gem sound(animal* a) do
+carve((*a).voice, "\n")
+end
+
+gem main() -> int do
+animal bobik = {"bobik", "gav", 5}
+sound(&bobik)
+dig_out 42
+end*/
+
+ссылка/указатель:
+type* name = &name2
+удалить: /*удалять надо списки/словари/указатели/ссылки и переменные созданные через мем_аллок*/
+detonate(name)
+разыменование:
+*name
+
+выделение памяти:
+type* name = mem_alloc(size)
+*name = meaning /*тип то есть число(int) и т.д. чтобы компилятор знал как работать с переменной, типы у меня не привязаны к размеру то есть базовый инт это 4 байта а если через мем_алок то будет именно столько сколько вы указали, хоть 1 или 111111 байт*/
+
+перевыделение памяти:
+name = rem_alloc(size)
+
+узнавание кол во байт:
+size(name) /*вернёт то количество байт которое занимает переменная, не размер типа а именно размер самой переменной в байтах*/
+
+циклы:
+strand int i=0, i<len(name), i=i+1 do
+code
+end
+
+strand int i=0, i<10, i+=1 do
+code
+end
+
+strand condition do
+code
+end
+
+return:
+dig_out meaning
+
+основная функция:
+gem main() -> int do
+code
+dig_out 42
+end
+
+длина:
+len(name) /*возвращает количество элементов(не байтов)*/
+
+преобразование типов:
+to(type, name)
+
+добавление паддинга:
+pad{кол-во байт}
+
+
+
+МНОГОПОТОЧКА(рантайм будет только здесь потому что я не вдупляю как сделать её без рантайма, если в коде не будет многопоточки то рантайма не будет и рантайм будет маленьким(наверно)):
+потоки:
+tunnel<type> name = make_tunnel(size) /*если не указывать размер, поток будет небуферизирован*/
+
+ввести в поток:
+name <- что нужно
+
+вывести из потока:
+name -> что нужно
+
+закрыть поток:
+t_close(name)
+
+подождать до:
+await(name, condition)
+
+горутины:
+go name
+go do
+code
+end
+
+
+
+гото:
+go_to name
+метка:
+::name::
+
+перечисления:
+vein name do
+end
+
+continune:
+explore
+
+break: /*выход только из одного цикла, для нескольких нужен go_to*/
+surface
+
+смещение:
+offset(name_layer, name_field)
+
+для добавления кода в определённую секцию:
+sect(name sect) do
+code
+end
+
+чтобы создать секцию:
+sect_create(name, порядковый номер, то есть какой по счёту должна лежать эта секция)
+
+выравнивание:
+align[(имя структуры/перечисления/списка/словаря)]
+
+атомик:
+lock do
+end
+
+чтобы не вовзращать управление:
+rfi /*return - from - interrupt*/
+
+расширение:
+.amet
+
+примечания:
+типа string нету
+битовые операции такие же как в С
+строки это список чаров который делается так:
+char[] name = "text" без \0, если тебе он нужен сам вставишь
+да для строк " " это будет как [] для чисел а , не нужны
+стиль названий snake_case потому что camelCase будет выглядеть странно потому что все команды названы через snake_case
+нет ++/--
+
+примеры:
+привет мир:
+gem main() -> int do
+carve("Hello world!\n")
+dig_out 42
+end
+
+калькулятор:
+gem calculate(int num_f, char sym, int num_s) -> int do
+if sym == '+' do
+dig_out num_f + num_s
+elif sym == '-' do
+dig_out num_f - num_s
+elif sym == '*' do
+dig_out num_f * num_s
+elif sym == '/' do
+if num_s != 0 do
+dig_out num_f / num_s
+else
+dig_out 404
+end
+else
+dig_out 404
+end
+end
+
+gem main() -> int do
+int a = to(int, ore())
+char c = to(char, ore())
+int b = to(int, ore())
+int res = calculate(a, c, b)
+carve("result: ", res, "\n")
+dig_out 42
+end
+
+работа с mem_alloc:
+gem main() -> int do
+int* dj = mem_alloc(2)
+*dj = 2
+carve(*dj, "\n")
+detonate(dj)
+dig_out 42
+end
+
+просто функций без возврата:
+gem non_return() do
+carve("это функция ничего не возваращает\n")
+end
+
+перечеслиние:
+vein color do
+red
+blue
+green
+end
+
+gem main() -> int do
+color my_color = red
+carve(my_color, "\n")
+dig_out 42
+end
