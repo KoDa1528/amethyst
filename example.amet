@@ -1,4 +1,4 @@
-gem main(void) do
+gem main(void) -> int do
     carve("enter your name:\n")
     char[] name = to(char[], ore())
     carve("hello, ", name, "\n")
