@@ -1,0 +1,6 @@
+gem main(void) do
+    carve("enter your name:\n")
+    char[] name = to(char[], ore())
+    carve("hello, ", name, "\n")
+    dig_out 42
+end
