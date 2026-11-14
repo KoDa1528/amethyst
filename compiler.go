@@ -13,7 +13,7 @@ import (
 
 func main() {
 	fmt.Printf("начало компилятора!!\n(а также я люблю го и аметист)\n")
-	path := "main.ay"
+	path := "example.amet"
 
 	data, err := os.ReadFile(path)
 	if err != nil {
