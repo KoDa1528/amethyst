@@ -86,10 +86,10 @@ int age
 end
 
 gem sound(animal* a) do
-carve((*a).voice, "\n")
+carve(*a.voice, "\n")
 end
 
-gem main() -> int do
+gem main(void) -> int do
 animal bobik = {"bobik", "gav", 5}
 sound(&bobik)
 dig_out 42
@@ -129,7 +129,7 @@ return:
 dig_out meaning
 
 основная функция:
-gem main() -> int do
+gem main(void) -> int do
 code
 dig_out 42
 end
@@ -222,7 +222,7 @@ char[] name = "text" без \0, если тебе он нужен сам вст�
 
 примеры:
 привет мир:
-gem main() -> int do
+gem main(void) -> int do
 carve("Hello world!\n")
 dig_out 42
 end
@@ -246,7 +246,7 @@ dig_out 404
 end
 end
 
-gem main() -> int do
+gem main(void) -> int do
 int a = to(int, ore())
 char c = to(char, ore())
 int b = to(int, ore())
@@ -256,7 +256,7 @@ dig_out 42
 end
 
 работа с mem_alloc:
-gem main() -> int do
+gem main(void) -> int do
 int* dj = mem_alloc(2)
 *dj = 2
 carve(*dj, "\n")
@@ -265,7 +265,7 @@ dig_out 42
 end
 
 просто функций без возврата:
-gem non_return() do
+gem non_return(void) do
 carve("это функция ничего не возваращает\n")
 end
 
@@ -276,7 +276,7 @@ blue
 green
 end
 
-gem main() -> int do
+gem main(void) -> int do
 color my_color = red
 carve(my_color, "\n")
 dig_out 42
